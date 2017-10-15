@@ -1,0 +1,25 @@
+---
+metricbeat.modules:
+- module: system
+
+  metricsets:
+    - cpu
+    - load
+    - core
+    - diskio
+    - filesystem
+    - fsstat
+    - memory
+    - network
+    - process
+
+  enabled: true
+  period: 10s
+  processes: ['.*']
+  cpu_ticks: false
+
+  output.elasticsearch:
+    hosts: ["elasticsearch:9200"]
+    template.name: "metricbeat"
+    template.path: "metricbeat.template.json"
+    template.overwrite: false
