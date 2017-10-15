@@ -21,7 +21,7 @@ services:
     volumes:
       - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml
       - ./logstash/pipeline:/usr/share/logstash/pipeline
-      - ./logs/gpuz/gpuz.log:/logs/gpuz/gpuz.log
+      - ./logs/gpuz:/logs/gpuz
     ports:
       - "5000:5000"
     environment:
@@ -42,28 +42,28 @@ services:
     depends_on:
       - elasticsearch
 
-  metricbeat:
-    build: metricbeat/
-    volumes:
-      - ./metricbeat/config/:/usr/share/metricbeat/config
-    ports:
-      - "5602:5602"
-    networks:
-      - elk
-    depends_on:
-      - elasticsearch
-
-  packetbeat:
-    build: packetbeat/
-    command: packetbeat -v -e -E output.elasticsearch.hosts='["localhost:9200"]'
-    volumes:
-      - ./packetbeat/config/:/usr/share/packetbeat/config
-    ports:
-      - "5603:5603"
-    cap_add: ['NET_RAW', 'NET_ADMIN']
-    network_mode: host
-    depends_on:
-      - elasticsearch
+  # metricbeat:
+  #   build: metricbeat/
+  #   volumes:
+  #     - ./metricbeat/config/:/usr/share/metricbeat/config
+  #   ports:
+  #     - "5602:5602"
+  #   networks:
+  #     - elk
+  #   depends_on:
+  #     - elasticsearch
+  #
+  # packetbeat:
+  #   build: packetbeat/
+  #   command: packetbeat -v -e -E output.elasticsearch.hosts='["localhost:9200"]'
+  #   volumes:
+  #     - ./packetbeat/config/:/usr/share/packetbeat/config
+  #   ports:
+  #     - "5603:5603"
+  #   cap_add: ['NET_RAW', 'NET_ADMIN']
+  #   network_mode: host
+  #   depends_on:
+  #     - elasticsearch
 
 networks:
 

@@ -14,7 +14,7 @@ metricbeat.modules:
     - process
 
   enabled: true
-  period: 10s
+  period: 5s
   processes: ['.*']
   cpu_ticks: false
 
